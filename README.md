@@ -87,6 +87,8 @@
   - 다시하기 클릭 시 해당 스테이지 처음부터 다시 실행,
     메인화면 클릭 시 메인화면으로 돌아감.
     
+    ![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png?raw=true)
+    
     <br>
     
 ## 4. 필요한 기술
