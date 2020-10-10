@@ -4,7 +4,14 @@
 
 * **High Concept**
 
-    식물과 좀비의 싸움이라는 신박한 디펜스 게임. 본 게임에는 없던 좀비 이동 아이템 추가 예정.
+    디펜스 게임으로 좀비의 공격으로부터 기지를 보호해야 한다.
+
+    공격하는 식물인 공격형 식물과 보조역할을 하는 식물인 보조형 식물을 적절히 배치하여 좀비의 공격으로부터 기지를 보호한다.
+
+    각 식물과 좀비의 특성을 달리하여 플레이어가 원하는 플레이를 하도록 한다.
+
+    스테이지 클리어 시 새로운 식물을 추가하여 플레이어의 흥미를 이끈다.
+
     
 <br>  
   
@@ -18,6 +25,10 @@
 
 ## 2. 개발 범위
 
+![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/2020-10-10%20(47).png?raw=true)
+    
+   <br>
+   
   ### <구현할 식물 종류 10종류>
   
   #### 1.  해바라기: 일정시간마다 햇살 생성
@@ -146,6 +157,8 @@
   
   <br>
   
+   
+   
 ## 3. 예상 게임 실행 흐름
 
   #### 1. 마우스 피킹을 통한 식물 배치
@@ -154,9 +167,20 @@
   #### 4. 식물의 무기와 좀비 충돌체크해서 좀비 체력 깎음
   #### 5. 식물과 좀비 충돌체크해서 식물의 체력 깎음 식물이 죽으면 좀비 앞으로 이동
   #### 6. 기지 범위 안에 좀비가 들어오면 차 한 대씩 사라짐
-    
+   ![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/2020-10-10%20(48).png?raw=true)
     
    <br>
+   
+   ![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/2020-10-10%20(49).png?raw=true)
+    
+   <br>
+   
+   ![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/2020-10-10%20(50).png?raw=true)
+    
+   <br>
+   
     
 ## 4. 개발 일정
-
+   ![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/2020-10-10%20(51).png?raw=true)
+    
+   <br>
