@@ -5,11 +5,12 @@ import bg
 import static_ui
 import card
 import generator
+import sun
 
 def enter():
     global stage
     stage = 1
-    gfw.world.init(['bg', 'ui', 'card'])
+    gfw.world.init(['bg', 'ui', 'card', 'sun'])
 
     bg.init()
     gfw.world.add(gfw.layer.bg, bg)
@@ -19,12 +20,15 @@ def enter():
     generator.init(stage)
 
 
+
+
 def change_stage():
     global stage
     generator.init(stage)
 
 def update():
     gfw.world.update()
+    generator.update()
 
 def draw():
     gfw.world.draw()
