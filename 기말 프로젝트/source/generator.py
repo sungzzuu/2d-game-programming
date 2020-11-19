@@ -4,7 +4,7 @@ from card import Card
 from sun import Sun
 import random
 
-SUN_TIME_TERM = 30
+SUN_TIME_TERM = 20
 sun_time = 0
 def init(stage):
 
