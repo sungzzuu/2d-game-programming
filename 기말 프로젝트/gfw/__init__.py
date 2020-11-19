@@ -1,33 +1,37 @@
-
+# version 2020-0927
 import time
 from pico2d import *
+import random
+import gfw.world
+import gfw.image
+import gfw.font
 
-running = True          # 게임이 돌아감을 나타내는 변수
-stack = None            # 게임 오브젝트 스택 초기화
-frame_interval = 0.01   # 프레임 간격.얼마마다 업데이트?
-delta_time = 0          # 사이 시간. 사이 시간이 frame_interval이 되면 업데이트하고 0으로 초기화
-
+running = True
+stack = None
+frame_interval = 0.01
+delta_time = 0
 
 def quit():
-    # global : 전역변수를 사용할 때 global 선언을 해서
-    # 전역변수를 사용함을 알려준다.
-
     global running
     running = False
 
 def run(start_state):
     global running, stack
     running = True
-    stack = [start_state]   # list
+    stack = [start_state]
 
-    open_canvas()
+    w,h = 800,600
+    if hasattr(start_state, 'canvas_width'): w = start_state.canvas_width
+    if hasattr(start_state, 'canvas_height'): h = start_state.canvas_height
 
-    # 이거 왜하는거?
+    open_canvas(w=w, h=h)
+
     start_state.enter()
 
     global delta_time
-    last_time = time.time()     #현재 시간
+    last_time = time.time()
     while running:
+        # inter-frame (delta) time
         now = time.time()
         delta_time = now - last_time
         last_time = now
@@ -47,25 +51,22 @@ def run(start_state):
 
         delay(frame_interval)
 
-    while len(stack) > 0 :      # 다끝나면 뺀다.
+    while (len(stack) > 0):
         stack[-1].exit()
         stack.pop()
-
 
     close_canvas()
 
 def change(state):
     global stack
-
-    if len(stack) > 0 :
-        stack.pop().exit()  # pop : 맨마지막 요소 돌려주고 삭제함
-
+    if (len(stack) > 0):
+        stack.pop().exit()
     stack.append(state)
     state.enter()
 
 def push(state):
     global stack
-    if len(stack) > 0 :
+    if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
@@ -88,7 +89,3 @@ def run_main():
     import sys
     main_module = sys.modules['__main__']
     run(main_module)
-
-
-
-
