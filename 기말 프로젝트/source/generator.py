@@ -4,8 +4,9 @@ from card import Card
 from sun import Sun
 import random
 
-SUN_TIME_TERM = 20
+SUN_TIME_TERM = 5
 sun_time = 0
+
 def init(stage):
 
     generate_start(stage)
@@ -13,7 +14,6 @@ def init(stage):
 def update():
     global sun_time
     sun_time += gfw.delta_time
-    print(sun_time)
     if sun_time > SUN_TIME_TERM:
         sun_time = 0
         generate_sun()
