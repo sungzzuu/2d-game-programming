@@ -2,6 +2,7 @@ from pico2d import *
 import gfw
 import gobj
 from sun import Sun
+from bullet import Bullet
 
 STATE_NEW = 0
 STATE_MOUNT = 1
@@ -68,9 +69,11 @@ class Plant:
                 m = Sun((self.pos[0], self.pos[1]), (self.pos[0], self.pos[1]))
                 gfw.world.add(gfw.layer.sun, m)
             elif self.name == 'Peashooter':
-                self.event_time = 5
+                m = Bullet((self.pos[0], self.pos[1]), 'Normal')
+                gfw.world.add(gfw.layer.bullet, m)
             elif self.name == 'SnowPea':
-                self.event_time = 5
+                m = Bullet((self.pos[0], self.pos[1]), 'snow')
+                gfw.world.add(gfw.layer.bullet, m)
             elif self.name == 'CherryBomb':
                 self.event_time = 3
             elif self.name == 'WallNut':

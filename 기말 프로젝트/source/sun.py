@@ -10,7 +10,7 @@ STATE_ARRIVED = 1
 STATE_MOVING = 0
 STATE_SCORED = 2
 SUN_SCORE = 25
-sun_score = 0
+sun_score = 100
 TARGET_X = 64
 TARGET_Y = 30
 

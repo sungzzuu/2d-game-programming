@@ -1,11 +1,11 @@
 from pico2d import *
 import gfw
 
-MOVE_PPS = 100
+MOVE_PPS = 500
 
 class Bullet:
     def __init__(self, pos, type):
-        self.pos = pos
+        self.pos = pos[0], pos[1] + 20
         self.type = type
         if self.type == 'snow':
             self.image = gfw.image.load('../res/plants/bullet/PeaIce.png')
@@ -20,7 +20,7 @@ class Bullet:
     def update(self):
         x, y = self.pos
         x += MOVE_PPS * gfw.delta_time
-
+        self.pos = x, y
         # 화면 밖 미사일 삭제
         if self.out_of_screen():
             gfw.world.remove(self)
@@ -31,4 +31,8 @@ class Bullet:
         if x > self.bb_r: return True
         if y < self.bb_b: return True
         if y > self.bb_t: return True
+
+
+    def draw(self):
+        self.image.draw(*self.pos)
 
