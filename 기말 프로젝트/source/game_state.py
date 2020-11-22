@@ -6,11 +6,12 @@ import static_ui
 import card
 import generator
 import sun
+from zombie import Zombie
 
 def enter():
     global stage
     stage = 1
-    gfw.world.init(['bg', 'ui', 'card', 'plant', 'bullet', 'sun'])
+    gfw.world.init(['bg', 'ui', 'card', 'plant', 'bullet', 'zombie', 'sun'])
 
     bg.init()
     gfw.world.add(gfw.layer.bg, bg)
@@ -19,6 +20,8 @@ def enter():
     gfw.world.add(gfw.layer.ui, static_ui)
     generator.init(stage)
 
+    m = Zombie()
+    gfw.world.add(gfw.layer.zombie, m)
     global font
     font = gfw.font.load('../res/moris9.ttf', 25)
 
