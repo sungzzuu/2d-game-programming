@@ -1,6 +1,7 @@
 from pico2d import *
 import gfw
 import gobj
+from sun import Sun
 
 STATE_NEW = 0
 STATE_MOUNT = 1
@@ -18,6 +19,18 @@ class Plant:
         self.fidx = 0
         self.time = 0
         self.state = STATE_NEW
+        self.hp = 100
+        self.event_start = 0
+        if name == 'SunFlower':
+            self.event_time = 15
+        elif name == 'Peashooter':
+            self.event_time = 5
+        elif name == 'SnowPea':
+            self.event_time = 5
+        elif name == 'CherryBomb':
+            self.event_time = 3
+        elif name == 'WallNut':
+            self.event_time = 0
 
     @staticmethod
     def load_all_images():
@@ -48,6 +61,21 @@ class Plant:
 
     def update(self):
         # state가 STATE_NEW이면 마우스 따라다니도록한다.
+        self.event_start += gfw.delta_time
+        if self.event_start > self.event_time:
+            self.event_start = 0
+            if self.name == 'SunFlower':
+                m = Sun((self.pos[0], self.pos[1]), (self.pos[0], self.pos[1]))
+                gfw.world.add(gfw.layer.sun, m)
+            elif self.name == 'Peashooter':
+                self.event_time = 5
+            elif self.name == 'SnowPea':
+                self.event_time = 5
+            elif self.name == 'CherryBomb':
+                self.event_time = 3
+            elif self.name == 'WallNut':
+                self.event_time = 0
+
         self.time += gfw.delta_time
         self.fidx = round(self.time * Plant.FPS)
 
@@ -69,3 +97,27 @@ class Plant:
         images = self.images[self.name]
         image = images[self.fidx % len(images)]
         image.draw(*self.pos)
+
+    def Sunflower_event(self):
+        # 일정시간마다 햇살 뱉어냄
+        pass
+
+    def PeaShooter_event(self):
+        # 일정시간마다 공격 총알 발사
+        pass
+
+    def Snowpea_event(self):
+        # 일정시간마다 얼음 총알 발사
+        pass
+
+    def CherryBomb_evnet(self):
+        # 설치 후 일정 시간 후 프레임이 바뀌고 프레임 마지막번째에서 터짐
+        # 마지막 프레임이 지속됨 그 후 삭제
+        # 폭발 시 근접 좀비 공격
+        pass
+
+    def WallNut_event(self):
+        # 체력이 매우 쎄다
+        # 체력이 줄면서 이미지가 먹힌걸로 바뀐다
+        pass
+
