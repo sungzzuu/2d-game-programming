@@ -3,6 +3,7 @@ import gfw
 from card import Card
 from sun import Sun
 import random
+from plant import Plant
 
 SUN_TIME_TERM = 5
 sun_time = 0
@@ -25,6 +26,10 @@ def generate_start(stage):
         gfw.world.add(gfw.layer.card, m)
         m = Card(1, 'sunflower')
         gfw.world.add(gfw.layer.card, m)
+        m = Plant((300, 300), 'SunFlower')
+        gfw.world.add(gfw.layer.plant, m)
+        m = Plant((400, 300), 'Peashooter')
+        gfw.world.add(gfw.layer.plant, m)
 
 def generate_sun():
     x = random.randrange(100, get_canvas_width() - 100)

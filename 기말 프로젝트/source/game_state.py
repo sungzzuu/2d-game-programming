@@ -7,21 +7,10 @@ import card
 import generator
 import sun
 
-
-
-
-
-
-
-
-
-
-
-
 def enter():
     global stage
     stage = 1
-    gfw.world.init(['bg', 'ui', 'card', 'sun'])
+    gfw.world.init(['bg', 'ui', 'card', 'plant', 'sun'])
 
     bg.init()
     gfw.world.add(gfw.layer.bg, bg)
