@@ -3,7 +3,7 @@ import gfw
 import gobj
 import random
 
-MOVE_PPS = 50
+MOVE_PPS = 100
 
 # x 값 랜덤하게 100 ~ 700 사이 y 값은 캔버스 사이즈만큼부터 -=
 STATE_ARRIVED = 1
@@ -29,8 +29,8 @@ class Sun:
         if self.state == STATE_SCORED:
             x, y = self.pos
             dirX, dirY = self.dir
-            x += dirX * gfw.delta_time * 0.5
-            y += dirY * gfw.delta_time * 0.5
+            x += dirX * gfw.delta_time
+            y += dirY * gfw.delta_time
             self.pos = x, y
             if x < TARGET_X:
                 self.remove()

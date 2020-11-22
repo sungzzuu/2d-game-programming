@@ -37,6 +37,10 @@ class Card:
         if sun.sun_score >= self.score:
             self.image = gfw.image.load(self.image_name + '1' + '.png')
             self.state = STATE_ON
+        else:
+            self.image = gfw.image.load(self.image_name + '0' + '.png')
+            self.state = STATE_OFF
+
 
     def draw(self):
         self.image.draw(*self.pos)
