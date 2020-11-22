@@ -63,6 +63,16 @@ def handle_mouse(e):
             capture = obj
             return True
 
+    for obj in gfw.world.objects_at(gfw.layer.card):
+        if obj.handle_event(e):
+            capture = obj
+            return True
+
+    for obj in gfw.world.objects_at(gfw.layer.plant):
+        if obj.handle_event(e):
+            capture = obj
+            return True
+
     return False
 
 

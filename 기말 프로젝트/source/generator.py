@@ -22,14 +22,10 @@ def update():
 
 def generate_start(stage):
     if stage == 1:
-        m = Card(0, 'peashooter')
+        m = Card(0, 'Peashooter')
         gfw.world.add(gfw.layer.card, m)
-        m = Card(1, 'sunflower')
+        m = Card(1, 'SunFlower')
         gfw.world.add(gfw.layer.card, m)
-        m = Plant((300, 300), 'SunFlower')
-        gfw.world.add(gfw.layer.plant, m)
-        m = Plant((400, 300), 'Peashooter')
-        gfw.world.add(gfw.layer.plant, m)
 
 def generate_sun():
     x = random.randrange(100, get_canvas_width() - 100)
@@ -38,3 +34,7 @@ def generate_sun():
     targetY = random.randrange(200, get_canvas_height()//2)
     m = Sun((x, y), (targetX, targetY))
     gfw.world.add(gfw.layer.sun, m)
+
+def generate_plant(pos, name):
+    m = Plant(pos, name)
+    gfw.world.add(gfw.layer.plant, m)

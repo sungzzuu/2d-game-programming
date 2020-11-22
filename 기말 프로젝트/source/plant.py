@@ -1,9 +1,12 @@
 from pico2d import *
 import gfw
+import gobj
 
-
+STATE_NEW = 0
+STATE_MOUNT = 1
 class Plant:
     PLANT_TYPE = ['SunFlower', 'Peashooter', 'SnowPea', 'WallNut', 'CherryBomb']
+
     images = {}
     FPS = 10
     def __init__(self, pos, name):
@@ -14,6 +17,7 @@ class Plant:
         self.name = name
         self.fidx = 0
         self.time = 0
+        self.state = STATE_NEW
 
     @staticmethod
     def load_all_images():
@@ -43,11 +47,23 @@ class Plant:
         print('%d images loaded for %s' % (count, char))
 
     def update(self):
+        # state가 STATE_NEW이면 마우스 따라다니도록한다.
         self.time += gfw.delta_time
         self.fidx = round(self.time * Plant.FPS)
 
     def remove(self):
         gfw.world.remove(self)
+
+    def handle_event(self, e):
+        if e.type == SDL_MOUSEBUTTONDOWN and e.button == SDL_BUTTON_LEFT:
+            self.state = STATE_MOUNT
+
+            return True
+        if self.state == STATE_NEW:
+            self.pos = e.x, get_canvas_height() - e.y
+            return True
+
+        return False
 
     def draw(self):
         images = self.images[self.name]

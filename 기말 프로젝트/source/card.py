@@ -2,6 +2,7 @@ from pico2d import *
 import gfw
 import sun
 import gobj
+from plant import Plant
 
 START_POS = 125, 40
 INTERVAL = 4
@@ -13,19 +14,20 @@ class Card:
     WIDTH, HEIGHT = 50, 70
     def __init__(self, order, name):
         self.state = STATE_OFF
-        if name == 'peashooter':
+        self.name = name
+        if name == 'Peashooter':
             self.image_name = '../res/interface/card/PeashooterSeedPacket'
             self.score = 100
-        elif name == 'sunflower':
+        elif name == 'SunFlower':
             self.image_name = '../res/interface/card/SunflowerSeedPacket'
             self.score = 50
-        elif name == 'snowshooter':
+        elif name == 'SnowPea':
             self.image_name = '../res/interface/card/SnowPeaSeedPacket'
             self.score = 175
-        elif name == 'cherrybomb':
+        elif name == 'CherryBomb':
             self.image_name = '../res/interface/card/CherryBombSeedPacket'
             self.score = 150
-        elif name == 'wallnut':
+        elif name == 'WallNut':
             self.image_name = '../res/interface/card/Wall-nutSeedPacket'
             self.score = 50
         self.image = gfw.image.load(self.image_name + '0' + '.png')
@@ -34,7 +36,7 @@ class Card:
     def update(self):
         if sun.sun_score >= self.score:
             self.image = gfw.image.load(self.image_name + '1' + '.png')
-            self.state = STATE_OFF
+            self.state = STATE_ON
 
     def draw(self):
         self.image.draw(*self.pos)
@@ -45,13 +47,16 @@ class Card:
         if e.type == SDL_MOUSEBUTTONDOWN and e.button == SDL_BUTTON_LEFT:
             pos = gobj.mouse_xy(e)
             if gobj.pt_in_rect(pos, self.get_bb()):
-
+                # 식물 추가하기
+                m = Plant((e.x, get_canvas_height() - e.y), self.name)
+                gfw.world.add(gfw.layer.plant, m)
+                sun.sun_score -= self.score
                 return True
         return False
 
     def get_bb(self):
         hw = Card.WIDTH // 2
-        hh =Card.HEIGHT // 2
+        hh = Card.HEIGHT // 2
         x, y = self.pos
         return x - hw, y - hh, x + hw, y + hh
 
