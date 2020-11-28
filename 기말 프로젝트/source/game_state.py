@@ -7,6 +7,7 @@ import card
 import generator
 import sun
 from zombie import Zombie
+from collision import check_collision
 
 def enter():
     global stage
@@ -34,6 +35,8 @@ def change_stage():
 def update():
     gfw.world.update()
     generator.update()
+
+    check_collision()
 
 def draw():
     gfw.world.draw()

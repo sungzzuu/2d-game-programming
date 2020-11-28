@@ -11,6 +11,7 @@ class Plant:
 
     images = {}
     FPS = 10
+    bb_WIDTH, bb_HEIGHT = 60, 70
     def __init__(self, pos, name):
         if len(Plant.images) == 0:
             Plant.load_all_images()
@@ -123,4 +124,13 @@ class Plant:
         # 체력이 매우 쎄다
         # 체력이 줄면서 이미지가 먹힌걸로 바뀐다
         pass
+
+    def get_bb(self):
+        l = -Plant.bb_WIDTH // 2
+        b = -Plant.bb_HEIGHT // 2
+        r = Plant.bb_WIDTH // 2
+        t = Plant.bb_HEIGHT // 2
+        x, y = self.pos
+        return x + l, y + b, x + r, y + t
+
 

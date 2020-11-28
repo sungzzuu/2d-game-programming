@@ -6,6 +6,7 @@ from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 
 class Zombie:
     WIDTH, HEIGHT = 166, 144
+    bb_WIDTH, bb_HEIGHT = 84, 120
     ACTIONS = ['Attack', '', 'Die']
     images = {}
     FPS = 12
@@ -21,6 +22,8 @@ class Zombie:
         self.fidx = 0
         self.time = 0
         self.speed = 5
+        self.hp = 100
+
 
     @staticmethod
     def load_all_images():
@@ -58,8 +61,28 @@ class Zombie:
         x, y = self.pos
         x -= self.speed * gfw.delta_time
         self.pos = x, y
+        if self.action == 'Die' and self.fidx > 8:
+            self.remove()
 
     def draw(self):
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
         image.draw(*self.pos)
+        
+    def get_bb(self):
+        l = -Zombie.bb_WIDTH // 2
+        b = -Zombie.bb_HEIGHT // 2
+        r = Zombie.bb_WIDTH // 2
+        t = Zombie.bb_HEIGHT // 2
+        x, y = self.pos
+        return x + l, y + b, x + r, y + t
+
+    def remove(self):
+        gfw.world.remove(self)
+
+    def collision_event(self, Att):
+        self.hp -= Att
+        if self.hp <= 0:
+            self.action = 'Die'
+            self.fidx = 0
+            self.time = 0

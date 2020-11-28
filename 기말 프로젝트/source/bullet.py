@@ -4,6 +4,7 @@ import gfw
 MOVE_PPS = 500
 
 class Bullet:
+    bb_WIDTH, bb_HEIGHT = 24, 24
     def __init__(self, pos, type):
         self.pos = pos[0], pos[1] + 20
         self.type = type
@@ -35,4 +36,13 @@ class Bullet:
 
     def draw(self):
         self.image.draw(*self.pos)
+
+    def get_bb(self):
+        l = -Bullet.bb_WIDTH // 2
+        b = -Bullet.bb_HEIGHT // 2
+        r = Bullet.bb_WIDTH // 2
+        t = Bullet.bb_HEIGHT // 2
+        x, y = self.pos
+        return x + l, y + b, x + r, y + t
+
 
