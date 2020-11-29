@@ -9,7 +9,6 @@ class Zombie:
     bb_WIDTH, bb_HEIGHT = 84, 120
     ACTIONS = ['Attack', '', 'Die']
     images = {}
-    FPS = 12
 
     def __init__(self):
         if len(Zombie.images) == 0:
@@ -23,6 +22,7 @@ class Zombie:
         self.time = 0
         self.speed = 5
         self.hp = 100
+        self.fps = 12
 
 
     @staticmethod
@@ -57,7 +57,7 @@ class Zombie:
 
     def update(self):
         self.time += gfw.delta_time
-        self.fidx = round(self.time * Zombie.FPS)
+        self.fidx = round(self.time * self.fps)
         x, y = self.pos
         x -= self.speed * gfw.delta_time
         self.pos = x, y
@@ -68,7 +68,7 @@ class Zombie:
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
         image.draw(*self.pos)
-        
+
     def get_bb(self):
         l = -Zombie.bb_WIDTH // 2
         b = -Zombie.bb_HEIGHT // 2
@@ -86,3 +86,4 @@ class Zombie:
             self.action = 'Die'
             self.fidx = 0
             self.time = 0
+            self.fps = 10
