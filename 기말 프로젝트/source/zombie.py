@@ -15,7 +15,7 @@ class Zombie:
             Zombie.load_all_images()
 
         self.pos = get_canvas_width(), get_canvas_height() // 2
-        self.char = 'Zombie'
+        self.char = 'ConeheadZombie'
         self.images = Zombie.load_images(self.char)
         self.action = ''
         self.fidx = 0
@@ -28,7 +28,7 @@ class Zombie:
     @staticmethod
     def load_all_images():
         Zombie.load_images('Zombie')
-        Zombie.load_images('NewspaperZombie')
+        Zombie.load_images('ConeheadZombie')
 
     @staticmethod
     def load_images(char):
@@ -82,8 +82,8 @@ class Zombie:
 
     def collision_event(self, Att):
         self.hp -= Att
-        if self.hp <= 0:
+        if self.hp <= 0 and self.action != 'Die':
             self.action = 'Die'
             self.fidx = 0
             self.time = 0
-            self.fps = 10
+            self.fps = 8
