@@ -3,6 +3,7 @@ import gfw
 import gobj
 import math
 from zombie import Zombie
+import plant
 
 def collides_distance(a, b):  # 구충돌
     ax, ay = a.pos
@@ -29,6 +30,16 @@ def check_collision_cherrybomb(pos):
     for zombie in gfw.world.objects_at(gfw.layer.zombie):
         if Get_Distance(pos, zombie.pos) < 100:
             zombie.collision_event(-1)
+
+def check_collision_plant_zombie():
+    for p in gfw.world.objects_at(gfw.layer.plant):
+        if p.name == 'CherryBomb' or p.state != plant.STATE_MOUNT:
+            continue
+        for zombie in gfw.world.objects_at(gfw.layer.zombie):
+            if gobj.collides_box(p, zombie):
+                p.collision_event(zombie.Att)
+                zombie.collision_event(0)
+
 
 
 
