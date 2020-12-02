@@ -8,10 +8,13 @@ class Bullet:
     def __init__(self, pos, type):
         self.pos = pos[0], pos[1] + 20
         self.type = type
+        self.Att = 0
         if self.type == 'snow':
             self.image = gfw.image.load('../res/plants/bullet/PeaIce.png')
+            self.Att = 20
         else:
             self.image = gfw.image.load('../res/plants/bullet/PeaNormal.png')
+            self.Att = 10
 
         self.bb_l = -self.image.w
         self.bb_b = -self.image.h

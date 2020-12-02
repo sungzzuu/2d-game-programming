@@ -83,6 +83,8 @@ class Zombie:
 
     def collision_event(self, Att):
         self.hp -= Att
+        if Att < 0:
+            self.hp = 0
         if self.hp <= 0 and self.action != 'Die':
             self.action = 'Die'
             self.fidx = 0
