@@ -7,11 +7,12 @@ from collision import check_collision_cherrybomb
 
 STATE_NEW = 0
 STATE_MOUNT = 1
+COLLISION_TIME = 0.3
 class Plant:
     PLANT_TYPE = ['SunFlower', 'Peashooter', 'SnowPea', 'WallNut', 'CherryBomb']
 
     images = {}
-    bb_WIDTH, bb_HEIGHT = 60, 70
+    bb_WIDTH, bb_HEIGHT = 20, 70
     def __init__(self, pos, name):
         if len(Plant.images) == 0:
             Plant.load_all_images()
@@ -27,6 +28,8 @@ class Plant:
         self.event_start = 0
         self.cherrybombtime = 0
         self.cherryBomb = False
+        self.collisiontime = 0.2
+
         if name == 'SunFlower':
             self.event_time = 15
         elif name == 'Peashooter':
@@ -74,6 +77,7 @@ class Plant:
         # state가 STATE_NEW이면 마우스 따라다니도록한다.
         if self.state == STATE_MOUNT:
             self.event_start += gfw.delta_time
+            self.collisiontime += gfw.delta_time
             if self.event_start > self.event_time:
                 if self.name != 'CherryBomb':
                     self.event_start = 0
@@ -103,13 +107,20 @@ class Plant:
                     check_collision_cherrybomb(self.pos)
                 self.cherrybombtime += gfw.delta_time
                 if self.cherrybombtime > 1:
-
                     self.remove()
 
 
 
     def remove(self):
         gfw.world.remove(self)
+
+    def collision_event(self, Att):
+        if self.collisiontime > COLLISION_TIME:
+            self.collisiontime = 0
+            self.hp -= Att
+            print("체력감소")
+            if self.hp < 0:
+                self.remove()
 
     def handle_event(self, e):
         if e.type == SDL_MOUSEBUTTONDOWN and e.button == SDL_BUTTON_LEFT:

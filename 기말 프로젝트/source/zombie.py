@@ -6,7 +6,7 @@ from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 
 class Zombie:
     WIDTH, HEIGHT = 166, 144
-    bb_WIDTH, bb_HEIGHT = 84, 120
+    bb_WIDTH, bb_HEIGHT = 20, 120
     ACTIONS = ['Attack', '', 'Die']
     images = {}
 
@@ -23,8 +23,8 @@ class Zombie:
         self.speed = 5
         self.hp = 100
         self.fps = 12
-
-
+        self.Att = 10
+        self.collisionplant = False
     @staticmethod
     def load_all_images():
         Zombie.load_images('Zombie')
@@ -57,6 +57,10 @@ class Zombie:
         return images
 
     def update(self):
+        if self.collisionplant == False and self.action == 'Attack':
+            self.action = ''
+            self.speed = 5
+
         self.time += gfw.delta_time
         self.fidx = round(self.time * self.fps)
         x, y = self.pos
@@ -64,6 +68,7 @@ class Zombie:
         self.pos = x, y
         if self.action == 'Die' and self.fidx > 8:
             self.remove()
+        self.collisionplant = False
 
     def draw(self):
         images = self.images[self.action]
@@ -85,6 +90,13 @@ class Zombie:
         self.hp -= Att
         if Att < 0:
             self.hp = 0
+        if Att == 0:  # 식물과 충돌 시 action Attack으로
+            self.collisionplant = True
+            if self.action != 'Attack':
+                self.action = 'Attack'
+                self.fidx = 0
+                self.time = 0
+                self.speed = 0
         if self.hp <= 0 and self.action != 'Die':
             self.action = 'Die'
             self.fidx = 0
