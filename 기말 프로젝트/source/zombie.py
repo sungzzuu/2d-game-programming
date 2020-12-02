@@ -29,6 +29,7 @@ class Zombie:
     def load_all_images():
         Zombie.load_images('Zombie')
         Zombie.load_images('ConeheadZombie')
+        Zombie.load_images('BucketheadZombie')
 
     @staticmethod
     def load_images(char):

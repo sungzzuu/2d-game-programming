@@ -26,6 +26,12 @@ def generate_start(stage):
         gfw.world.add(gfw.layer.card, m)
         m = Card(1, 'SunFlower')
         gfw.world.add(gfw.layer.card, m)
+        m = Card(2, 'SnowPea')
+        gfw.world.add(gfw.layer.card, m)
+        m = Card(3, 'WallNut')
+        gfw.world.add(gfw.layer.card, m)
+        m = Card(4, 'CherryBomb')
+        gfw.world.add(gfw.layer.card, m)
 
 def generate_sun():
     x = random.randrange(100, get_canvas_width() - 100)

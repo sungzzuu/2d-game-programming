@@ -10,7 +10,6 @@ class Plant:
     PLANT_TYPE = ['SunFlower', 'Peashooter', 'SnowPea', 'WallNut', 'CherryBomb']
 
     images = {}
-    FPS = 10
     bb_WIDTH, bb_HEIGHT = 60, 70
     def __init__(self, pos, name):
         if len(Plant.images) == 0:
@@ -22,7 +21,10 @@ class Plant:
         self.time = 0
         self.state = STATE_NEW
         self.hp = 100
+        self.fps = 10
         self.event_start = 0
+        self.cherrybombtime = 0
+        self.cherryBomb = False
         if name == 'SunFlower':
             self.event_time = 15
         elif name == 'Peashooter':
@@ -32,12 +34,16 @@ class Plant:
         elif name == 'CherryBomb':
             self.event_time = 3
         elif name == 'WallNut':
-            self.event_time = 0
+            self.event_time = 10
 
     @staticmethod
     def load_all_images():
         Plant.load_images('SunFlower')
         Plant.load_images('Peashooter')
+        Plant.load_images('SnowPea')
+        Plant.load_images('CherryBomb')
+        Plant.load_images('Peashooter')
+        Plant.load_images('WallNut')
 
     @staticmethod
     def load_images(char):
@@ -65,7 +71,8 @@ class Plant:
         # state가 STATE_NEW이면 마우스 따라다니도록한다.
         self.event_start += gfw.delta_time
         if self.event_start > self.event_time:
-            self.event_start = 0
+            if self.name != 'CherryBomb':
+                self.event_start = 0
             if self.name == 'SunFlower':
                 m = Sun((self.pos[0], self.pos[1]), (self.pos[0], self.pos[1]))
                 gfw.world.add(gfw.layer.sun, m)
@@ -75,13 +82,23 @@ class Plant:
             elif self.name == 'SnowPea':
                 m = Bullet((self.pos[0], self.pos[1]), 'snow')
                 gfw.world.add(gfw.layer.bullet, m)
-            elif self.name == 'CherryBomb':
-                self.event_time = 3
+            elif self.name == 'CherryBomb' and self.cherryBomb == False:
+                self.time += gfw.delta_time
+                self.fidx = round(self.time * self.fps)
             elif self.name == 'WallNut':
                 self.event_time = 0
 
-        self.time += gfw.delta_time
-        self.fidx = round(self.time * Plant.FPS)
+        if self.name != 'CherryBomb':
+            self.time += gfw.delta_time
+            self.fidx = round(self.time * self.fps)
+        else: # 체리의 인덱스가 터짐이면 좀비와 충돌체크해서 주변 좀비 죽인다. 그리고 삭제된다.
+            if self.fidx >= 6:
+                self.cherryBomb = True
+                self.cherrybombtime += gfw.delta_time
+                if self.cherrybombtime > 1:
+                    self.remove()
+
+
 
     def remove(self):
         gfw.world.remove(self)
