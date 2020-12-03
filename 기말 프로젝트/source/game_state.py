@@ -7,17 +7,20 @@ import card
 import generator
 import sun
 from zombie import Zombie
-from collision import check_collision_bullet_zombie, check_collision_plant_zombie
+from collision import check_collision_bullet_zombie, check_collision_plant_zombie, check_collision_zombie_car
 import random
+
+from car import Car
 
 ZOMBIE_TIME = 5
 ZOMBIE_NUM = 15
 START_TIME = 20
 
+
 def enter():
     global stage
     stage = 1
-    gfw.world.init(['bg', 'ui', 'card', 'plant', 'bullet', 'zombie', 'sun'])
+    gfw.world.init(['bg', 'ui', 'car', 'card', 'plant', 'bullet', 'zombie', 'sun'])
 
     bg.init()
     gfw.world.add(gfw.layer.bg, bg)
@@ -25,6 +28,10 @@ def enter():
     static_ui.init()
     gfw.world.add(gfw.layer.ui, static_ui)
     generator.init(stage)
+
+    for i in range(5):
+        car = Car((10, i*100 + 70))
+        gfw.world.add(gfw.layer.car, car)
 
     global font
     font = gfw.font.load('../res/moris9.ttf', 25)
@@ -41,12 +48,16 @@ def change_stage():
 
 def update():
     global start
+    if Zombie.GAME_OVER == True:
+        gfw.world.clear()
+        Zombie.GAME_OVER = False
 
     gfw.world.update()
     generator.update()
 
     check_collision_bullet_zombie()
     check_collision_plant_zombie()
+    check_collision_zombie_car()
 
     global zombie_generate_time
     zombie_generate_time += gfw.delta_time
@@ -66,7 +77,7 @@ def update():
         generator.generate_zombie(type)
 
     # 시작했고 좀비가 다 비었으면 5초후에 Final wave 띄우고 마지막 좀비 공격 시작
-    
+
 
 def draw():
     gfw.world.draw()

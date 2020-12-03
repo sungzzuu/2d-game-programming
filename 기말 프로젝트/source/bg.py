@@ -5,6 +5,8 @@ def init():
    global image
    image = gfw.image.load('../res/background/bg_03.png')
 
+
+
 def draw():
     x, y = get_canvas_width() // 2, get_canvas_height() // 2
     image.draw(image.w//2 - 220, y)

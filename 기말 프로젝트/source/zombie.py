@@ -1,7 +1,6 @@
 from pico2d import *
 import gfw
 import gobj
-
 from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 
 class Zombie:
@@ -9,6 +8,7 @@ class Zombie:
     bb_WIDTH, bb_HEIGHT = 20, 120
     ACTIONS = ['Attack', '', 'Die']
     images = {}
+    GAME_OVER = False
     def __init__(self, pos, char):
         if len(Zombie.images) == 0:
             Zombie.load_all_images()
@@ -68,6 +68,10 @@ class Zombie:
         if self.action == 'Die' and self.fidx > 8:
             self.remove()
         self.collisionplant = False
+
+        # 좀비의 좌표가 풀밭을 벗어나면 게임오버 올스탑
+        if x < - Zombie.WIDTH // 2:
+            Zombie.GAME_OVER = True
 
     def draw(self):
         images = self.images[self.action]

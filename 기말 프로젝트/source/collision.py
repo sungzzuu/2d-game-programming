@@ -4,6 +4,7 @@ import gobj
 import math
 from zombie import Zombie
 import plant
+from car import Car
 
 def collides_distance(a, b):  # 구충돌
     ax, ay = a.pos
@@ -41,5 +42,11 @@ def check_collision_plant_zombie():
                 zombie.collision_event(0)
 
 
+def check_collision_zombie_car():
+    for z in gfw.world.objects_at(gfw.layer.zombie):
+        for c in gfw.world.objects_at(gfw.layer.car):
+            if gobj.collides_box(z, c):
+                z.collision_event(-1)
+                c.collision_event()
 
 
