@@ -8,6 +8,11 @@ import generator
 import sun
 from zombie import Zombie
 from collision import check_collision_bullet_zombie, check_collision_plant_zombie
+import random
+
+ZOMBIE_TIME = 5
+ZOMBIE_NUM = 15
+START_TIME = 20
 
 def enter():
     global stage
@@ -21,23 +26,47 @@ def enter():
     gfw.world.add(gfw.layer.ui, static_ui)
     generator.init(stage)
 
-    m = Zombie()
-    gfw.world.add(gfw.layer.zombie, m)
     global font
     font = gfw.font.load('../res/moris9.ttf', 25)
 
+    global zombie_generate_time
+    zombie_generate_time = 0.0
 
+    global start
+    start = False
 
 def change_stage():
     global stage
     generator.init(stage)
 
 def update():
+    global start
+
     gfw.world.update()
     generator.update()
 
     check_collision_bullet_zombie()
     check_collision_plant_zombie()
+
+    global zombie_generate_time
+    zombie_generate_time += gfw.delta_time
+    if zombie_generate_time > START_TIME and start == False:
+        generator.generate_zombie_start()
+        zombie_generate_time = 0
+        start = True
+    elif start == False:
+        return
+
+
+
+
+    if zombie_generate_time > ZOMBIE_TIME and generator.Zombie_Generate_num < ZOMBIE_NUM:
+        zombie_generate_time = 0
+        type = random.choice(['ConeheadZombie', 'BucketheadZombie', 'FlagZombie'])
+        generator.generate_zombie(type)
+
+    # 시작했고 좀비가 다 비었으면 5초후에 Final wave 띄우고 마지막 좀비 공격 시작
+    
 
 def draw():
     gfw.world.draw()

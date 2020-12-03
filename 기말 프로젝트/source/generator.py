@@ -4,9 +4,11 @@ from card import Card
 from sun import Sun
 import random
 from plant import Plant
+from zombie import  Zombie
 
 SUN_TIME_TERM = 5
 sun_time = 0
+Zombie_Generate_num = 0
 
 def init(stage):
 
@@ -44,3 +46,20 @@ def generate_sun():
 def generate_plant(pos, name):
     m = Plant(pos, name)
     gfw.world.add(gfw.layer.plant, m)
+
+def generate_zombie_start():
+    global Zombie_Generate_num
+
+    for i in range(1, 6):
+        m = Zombie((get_canvas_width() + random.randint(0, 5) * 10, get_canvas_height() - i * 100), 'Zombie')
+        gfw.world.add(gfw.layer.zombie, m)
+        Zombie_Generate_num += 1
+
+def generate_zombie(name):
+    global Zombie_Generate_num
+    m = Zombie((get_canvas_width() + random.randint(0, 5) * 10, get_canvas_height() - random.randint(1, 5) * 100), name)
+    gfw.world.add(gfw.layer.zombie, m)
+    Zombie_Generate_num += 1
+
+def generate_zombie_final():
+    pass

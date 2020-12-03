@@ -9,18 +9,17 @@ class Zombie:
     bb_WIDTH, bb_HEIGHT = 20, 120
     ACTIONS = ['Attack', '', 'Die']
     images = {}
-
-    def __init__(self):
+    def __init__(self, pos, char):
         if len(Zombie.images) == 0:
             Zombie.load_all_images()
 
-        self.pos = get_canvas_width(), get_canvas_height() // 2
-        self.char = 'ConeheadZombie'
+        self.pos = pos
+        self.char = char
         self.images = Zombie.load_images(self.char)
         self.action = ''
         self.fidx = 0
         self.time = 0
-        self.speed = 5
+        self.speed = 10
         self.hp = 100
         self.fps = 12
         self.Att = 10
