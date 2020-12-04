@@ -57,7 +57,7 @@ def generate_zombie_start():
 
 def generate_zombie(name):
     global Zombie_Generate_num
-    m = Zombie((get_canvas_width() + random.randint(0, 5) * 10, get_canvas_height() - random.randint(1, 5) * 100), name)
+    m = Zombie((get_canvas_width() + random.randint(0, 10) * 20, get_canvas_height() - random.randint(1, 5) * 100), name)
     gfw.world.add(gfw.layer.zombie, m)
     Zombie_Generate_num += 1
 

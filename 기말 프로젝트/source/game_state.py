@@ -9,13 +9,14 @@ import sun
 from zombie import Zombie
 from collision import check_collision_bullet_zombie, check_collision_plant_zombie, check_collision_zombie_car
 import random
+import over_state
 
 from car import Car
 
 ZOMBIE_TIME = 5
 ZOMBIE_NUM = 15
-START_TIME = 20
-
+START_TIME = 0
+FINAL_GAP_TIME = 0
 
 def enter():
     global stage
@@ -51,6 +52,8 @@ def update():
     if Zombie.GAME_OVER == True:
         gfw.world.clear()
         Zombie.GAME_OVER = False
+        gfw.change(over_state)
+        return
 
     gfw.world.update()
     generator.update()
@@ -77,6 +80,13 @@ def update():
         generator.generate_zombie(type)
 
     # 시작했고 좀비가 다 비었으면 5초후에 Final wave 띄우고 마지막 좀비 공격 시작
+    global FINAL_GAP_TIME
+    if start == True and gfw.world.count_at(gfw.layer.zombie) == 0 and FINAL_GAP_TIME <= 5 :
+        FINAL_GAP_TIME += gfw.delta_time
+        if FINAL_GAP_TIME > 5:
+            for i in range(20):
+                type = random.choice(['ConeheadZombie', 'BucketheadZombie', 'FlagZombie', 'Zombie'])
+                z = generator.generate_zombie(type)
 
 
 def draw():
@@ -124,6 +134,14 @@ def handle_mouse(e):
 
 
 def exit():
+    pass
+
+
+def pause():
+    pass
+
+
+def resume():
     pass
 
 if __name__ == '__main__':

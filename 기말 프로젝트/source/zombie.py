@@ -3,12 +3,18 @@ import gfw
 import gobj
 from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 
+
+def set_image_alpha(image, alpha):
+    SDL_SetTextureAlphaMod(image.texture, int(alpha))
+
 class Zombie:
     WIDTH, HEIGHT = 166, 144
-    bb_WIDTH, bb_HEIGHT = 20, 120
+    bb_WIDTH, bb_HEIGHT = 20, 80
     ACTIONS = ['Attack', '', 'Die']
     images = {}
     GAME_OVER = False
+
+
     def __init__(self, pos, char):
         if len(Zombie.images) == 0:
             Zombie.load_all_images()
@@ -19,11 +25,16 @@ class Zombie:
         self.action = ''
         self.fidx = 0
         self.time = 0
-        self.speed = 10
+        self.speed = 12
         self.hp = 100
         self.fps = 12
         self.Att = 10
+        self.alpha = 255
         self.collisionplant = False
+
+    def some_function(self, image):
+        set_image_alpha(image, self.alpha)
+
     @staticmethod
     def load_all_images():
         Zombie.load_images('Zombie')
@@ -55,6 +66,11 @@ class Zombie:
         print('%d images loaded for %s' % (count, char))
         return images
 
+    def alpha_decrease(self):
+        self.alpha -= 2
+        if self.alpha <= 0:
+            self.remove()
+
     def update(self):
         if self.collisionplant == False and self.action == 'Attack':
             self.action = ''
@@ -65,8 +81,9 @@ class Zombie:
         x, y = self.pos
         x -= self.speed * gfw.delta_time
         self.pos = x, y
-        if self.action == 'Die' and self.fidx > 8:
-            self.remove()
+        if self.action == 'Die' and self.fidx >= 8:
+            self.fidx = 8
+            self.alpha_decrease()
         self.collisionplant = False
 
         # 좀비의 좌표가 풀밭을 벗어나면 게임오버 올스탑
@@ -76,6 +93,7 @@ class Zombie:
     def draw(self):
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
+        self.some_function(image)
         image.draw(*self.pos)
 
     def get_bb(self):
@@ -105,3 +123,4 @@ class Zombie:
             self.fidx = 0
             self.time = 0
             self.fps = 8
+            self.speed = 0

@@ -8,7 +8,7 @@ import gfw
 
 class Car:
     bb_WIDTH = 70
-    bb_HEIGHT = 50
+    bb_HEIGHT = 10
     def __init__(self, pos):
         self. pos = pos
         self.image = gfw.image.load('../res/interface/LawnCleaner.png')
