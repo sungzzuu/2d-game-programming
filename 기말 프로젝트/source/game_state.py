@@ -10,6 +10,7 @@ from zombie import Zombie
 from collision import check_collision_bullet_zombie, check_collision_plant_zombie, check_collision_zombie_car
 import random
 import over_state
+import clear_state
 
 from car import Car
 
@@ -70,10 +71,6 @@ def update():
         start = True
     elif start == False:
         return
-
-
-
-
     if zombie_generate_time > ZOMBIE_TIME and generator.Zombie_Generate_num < ZOMBIE_NUM:
         zombie_generate_time = 0
         type = random.choice(['ConeheadZombie', 'BucketheadZombie', 'FlagZombie'])
@@ -87,6 +84,11 @@ def update():
             for i in range(20):
                 type = random.choice(['ConeheadZombie', 'BucketheadZombie', 'FlagZombie', 'Zombie'])
                 z = generator.generate_zombie(type)
+        static_ui.FINAL_WAVE = True
+    if FINAL_GAP_TIME > 5 and gfw.world.count_at(gfw.layer.zombie) == 0:
+        gfw.change(clear_state)
+    if static_ui.FINAL_WAVE and gfw.world.count_at(gfw.layer.zombie) != 0:
+        static_ui.FINAL_WAVE = False
 
 
 def draw():

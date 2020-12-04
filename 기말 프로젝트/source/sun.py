@@ -15,6 +15,10 @@ TARGET_X = 64
 TARGET_Y = 30
 
 
+def set_image_alpha(image, alpha):
+    SDL_SetTextureAlphaMod(image.texture, int(alpha))
+
+
 class Sun:
     WIDTH, HEIGHT = 80, 80
     def __init__(self, pos, target):
@@ -23,6 +27,10 @@ class Sun:
         self.target = target
         self.image = gfw.image.load('../res/interface/Sun.png')
         self.dir = 0, 0
+        self.alpha = 230
+
+    def some_function(self, image):
+        set_image_alpha(image, self.alpha)
 
     def update(self):
         global sun_score
@@ -48,6 +56,7 @@ class Sun:
                 self.pos = x, y
                 self.state = STATE_ARRIVED
     def draw(self):
+        self.some_function(self.image)
         self.image.draw(*self.pos)
 
     def handle_event(self, e):

@@ -24,7 +24,7 @@ def check_collision_bullet_zombie():
         for zombie in gfw.world.objects_at(gfw.layer.zombie):
             if gobj.collides_box(bullet, zombie):
                 gfw.world.remove(bullet)
-                zombie.collision_event(10)
+                zombie.collision_event(bullet.Att)
 
 
 def check_collision_cherrybomb(pos):

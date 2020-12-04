@@ -7,9 +7,16 @@ from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 def set_image_alpha(image, alpha):
     SDL_SetTextureAlphaMod(image.texture, int(alpha))
 
+def set_image_blood(image, imageblood):
+    if imageblood:
+        SDL_SetTextureColorMod(image.texture,255, 0, 0)
+    else:
+        SDL_SetTextureColorMod(image.texture,255, 255, 255)
+
+
 class Zombie:
     WIDTH, HEIGHT = 166, 144
-    bb_WIDTH, bb_HEIGHT = 20, 80
+    bb_WIDTH, bb_HEIGHT = 20, 60
     ACTIONS = ['Attack', '', 'Die']
     images = {}
     GAME_OVER = False
@@ -30,10 +37,15 @@ class Zombie:
         self.fps = 12
         self.Att = 10
         self.alpha = 255
+        self.bloodTime = 0
+        self.imageblood = False
         self.collisionplant = False
 
     def some_function(self, image):
         set_image_alpha(image, self.alpha)
+
+    def blood_function(self, image):
+        set_image_blood(image, self.imageblood)
 
     @staticmethod
     def load_all_images():
@@ -72,6 +84,12 @@ class Zombie:
             self.remove()
 
     def update(self):
+        if self.bloodTime >= 1:
+            self.bloodTime += gfw.delta_time
+            if self.bloodTime > 1.2:
+                self.bloodTime = 0
+                self.imageblood = False
+
         if self.collisionplant == False and self.action == 'Attack':
             self.action = ''
             self.speed = 5
@@ -94,6 +112,7 @@ class Zombie:
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
         self.some_function(image)
+        self.blood_function(image)
         image.draw(*self.pos)
 
     def get_bb(self):
@@ -111,13 +130,17 @@ class Zombie:
         self.hp -= Att
         if Att < 0:
             self.hp = 0
-        if Att == 0:  # 식물과 충돌 시 action Attack으로
+        elif Att == 0:  # 식물과 충돌 시 action Attack으로
             self.collisionplant = True
             if self.action != 'Attack':
                 self.action = 'Attack'
                 self.fidx = 0
                 self.time = 0
                 self.speed = 0
+        elif Att == 20 or Att == 10:
+            if self.imageblood == False:
+                self.bloodTime = 1
+                self.imageblood = True
         if self.hp <= 0 and self.action != 'Die':
             self.action = 'Die'
             self.fidx = 0
