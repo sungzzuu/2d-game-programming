@@ -18,10 +18,21 @@ https://www.youtube.com/watch?v=smVro5Y00OE&feature=youtu.be&ab_channel=%EC%9C%A
 ## 개발 진척도
 <br>
 
+![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/develop.PNG?raw=true)
+
+<br>
+
 ## 주차별 커밋 횟수
 <br>
 
-## 게임 최종 구현 내용
+![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/git.PNG?raw=true)
+
+<br>
+
+<br>
+
+![Alt text](https://github.com/sungzzuu/2d-game-programming/blob/master/image/gitgraph.PNG?raw=true)
+
 <br>
 
 ## 지인의 게임에 대한 평가
